@@ -1,19 +1,16 @@
 
 md.xhr = () => {
-
-  var get = (url, done) => {
-    ;(async () => {
+  const get = (url, done) => {
+    (async () => {
       await new Promise(async (resolve, reject) => {
         try {
-          var res = await fetch(url + '?preventCache=' + Date.now())
-          done(null, await res.text())
+          const res = await fetch(url + '?preventCache=' + Date.now());
+          done(null, await res.text());
+        } catch (err) {
+          done(err);
         }
-        catch (err) {
-          done(err)
-        }
-      })
-    })()
-  }
-
-  return {get}
-}
+      });
+    })();
+  };
+  return { get };
+};

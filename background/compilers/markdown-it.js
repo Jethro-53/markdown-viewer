@@ -1,8 +1,8 @@
 
-var md = {compilers: {}}
+const md = { compilers: {} };
 
 md.compilers['markdown-it'] = (() => {
-  var defaults = {
+  const defaults = {
     breaks: false,
     html: true,
     linkify: true,
@@ -21,9 +21,9 @@ md.compilers['markdown-it'] = (() => {
     sub: false,
     sup: false,
     tasklists: false,
-  }
+  };
 
-  var description = {
+  const description = {
     breaks: 'Convert \\n in paragraphs into <br>',
     html: 'Enable HTML tags in source',
     linkify: 'Autoconvert URL-like text to links',
@@ -40,15 +40,15 @@ md.compilers['markdown-it'] = (() => {
     sub: 'Subscript <sub>\n~text~',
     sup: 'Superscript <sup>\n^text^',
     tasklists: 'Task lists\n- [x]\n- [ ]',
-  }
+  };
 
-  var ctor = ({storage: {state}}) => ({
+  const ctor = ({ storage: { state } }) => ({
     defaults,
     description,
     compile: (markdown) =>
       mdit.mdit(state['markdown-it'])
         .use(mdit.anchor, {
-          slugify: (s) => new mdit.slugger().slug(s)
+          slugify: s => new mdit.slugger().slug(s)
         })
         .use(state['markdown-it'].abbr ? mdit.abbr : () => {})
         .use(state['markdown-it'].attrs ? mdit.attrs : () => {})
@@ -61,7 +61,7 @@ md.compilers['markdown-it'] = (() => {
         .use(state['markdown-it'].sup ? mdit.sup : () => {})
         .use(state['markdown-it'].tasklists ? mdit.tasklists : () => {})
         .render(markdown)
-  })
+  });
 
-  return Object.assign(ctor, {defaults, description})
-})()
+  return Object.assign(ctor, { defaults, description });
+})();

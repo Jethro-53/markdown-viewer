@@ -1,11 +1,11 @@
 
 md.compilers.commonmark = (() => {
-  var defaults = {
+  const defaults = {
     safe: false,
     smart: false,
-  }
+  };
 
-  var description = {
+  const description = {
     safe: 'Raw HTML will not be rendered',
     smart: [
       'Straight quotes will be made curly',
@@ -13,18 +13,17 @@ md.compilers.commonmark = (() => {
       '--- will be changed to an em dash',
       'and ... will be changed to ellipses'
     ].join('\n'),
-  }
+  };
 
-  var ctor = ({storage: {state}}) => ({
+  const ctor = ({ storage: { state } }) => ({
     defaults,
     description,
-    compile: (markdown) => ((
-      reader = new commonmark.Parser(),
-      writer = new commonmark.HtmlRenderer(state.commonmark)
-    ) =>
-      writer.render(reader.parse(markdown))
-    )()
-  })
+    compile: (markdown) => {
+      const reader = new commonmark.Parser();
+      const writer = new commonmark.HtmlRenderer(state.commonmark);
+      return writer.render(reader.parse(markdown));
+    }
+  });
 
-  return Object.assign(ctor, {defaults, description})
-})()
+  return Object.assign(ctor, { defaults, description });
+})();

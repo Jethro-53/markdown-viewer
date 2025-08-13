@@ -1,18 +1,18 @@
 
 md.compilers.remark = (() => {
-  var defaults = {
+  const defaults = {
     breaks: false,
     gfm: true,
     sanitize: false,
-  }
+  };
 
-  var description = {
+  const description = {
     breaks: 'Exposes newline characters inside paragraphs as breaks',
     gfm: 'Toggle GFM (GitHub Flavored Markdown)',
     sanitize: 'Disable HTML tag rendering',
-  }
+  };
 
-  var ctor = ({storage: {state}}) => ({
+  const ctor = ({ storage: { state } }) => ({
     defaults,
     description,
     compile: (markdown) =>
@@ -25,7 +25,7 @@ md.compilers.remark = (() => {
         .use(remark.html, state.remark) // sanitize
         .processSync(markdown)
         .value
-  })
+  });
 
-  return Object.assign(ctor, {defaults, description})
-})()
+  return Object.assign(ctor, { defaults, description });
+})();

@@ -1,36 +1,34 @@
 
 md.mathjax = () => {
-
-  var delimiters = new RegExp([
+  const delimiters = new RegExp([
     /\$\$[^`]*?\$\$/,
     /\\\([^`]*?\\\)/,
     /\\\[[^`]*?\\\]/,
     /\\begin\{.*?\}[^`]*?\\end\{.*?\}/,
     /\$[^`\n]*?\$/,
-  ]
-  .map((regex) => `(?:${regex.source})`).join('|'), 'gi')
+  ].map(regex => `(?:${regex.source})`).join('|'), 'gi');
 
-  var escape = (math) =>
-    math.replace(/[<>&]/gi, (symbol) =>
-      symbol === '>' ? '&gt;' :
-      symbol === '<' ? '&lt;' :
-      symbol === '&' ? '&amp;': null
-    )
+  const escape = math =>
+    math.replace(/[<>&]/gi, symbol =>
+      symbol === '>' ? '&gt;'
+      : symbol === '<' ? '&lt;'
+      : symbol === '&' ? '&amp;'
+      : null
+    );
 
-  var ctor = (map = {}) => ({
-    tokenize: (markdown) =>
+  const ctor = (map = {}) => ({
+    tokenize: markdown =>
       markdown.replace(delimiters, (str, offset) => (
         map[offset] = str,
         `?${offset}?`
-      ))
-    ,
-    detokenize: (html) =>
+      )),
+    detokenize: html =>
       Object.keys(map)
         .reduce((html, offset) =>
-          html = html.replace(`?${offset}?`, () => escape(map[offset])),
+          html.replace(`?${offset}?`, () => escape(map[offset])),
           html
         )
-  })
+  });
 
-  return Object.assign(ctor, {delimiters, escape})
-}
+  return Object.assign(ctor, { delimiters, escape });
+};

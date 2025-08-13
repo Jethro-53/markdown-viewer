@@ -1,8 +1,8 @@
 
 md.compilers.showdown = (() => {
-  var defaults = null // see below
+  let defaults = null; // see below
 
-  var description = {
+  const description = {
     disableForced4SpacesIndentedSublists: 'Disables the requirement of indenting nested sublists by 4 spaces',
     encodeEmails: 'Encode e-mail addresses through the use of Character Entities, transforming ASCII e-mail addresses into its equivalent decimal entities',
     ghCodeBlocks: 'Turn on/off GFM fenced code blocks support',
@@ -32,27 +32,27 @@ md.compilers.showdown = (() => {
     ellipsis: 'Replaces three dots with the ellipsis unicode character',
     metadata: 'Enable support for document metadata',
     splitAdjacentBlockquotes: 'Split adjacent blockquote blocks',
-  }
+  };
 
-  var flavor = (name) => {
-    var options = showdown.getDefaultOptions()
-    var flavor = showdown.getFlavorOptions(name)
-    var result = {}
-    for (var key in options) {
-      result[key] = (flavor[key] !== undefined) ? flavor[key] : options[key]
+  const flavor = (name) => {
+    const options = showdown.getDefaultOptions();
+    const flavor = showdown.getFlavorOptions(name);
+    const result = {};
+    for (const key in options) {
+      result[key] = (flavor[key] !== undefined) ? flavor[key] : options[key];
     }
-    return result
-  }
+    return result;
+  };
 
-  defaults = flavor('github')
+  defaults = flavor('github');
 
-  var ctor = ({storage: {state}}) => ({
+  const ctor = ({ storage: { state } }) => ({
     defaults,
     description,
     compile: (markdown) =>
       new showdown.Converter(state.showdown)
         .makeHtml(markdown)
-  })
+  });
 
-  return Object.assign(ctor, {defaults, description})
-})()
+  return Object.assign(ctor, { defaults, description });
+})();

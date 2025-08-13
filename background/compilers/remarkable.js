@@ -1,6 +1,6 @@
 
 md.compilers.remarkable = (() => {
-  var defaults = {
+  const defaults = {
     breaks: false,
     html: true,
     linkify: true,
@@ -8,23 +8,23 @@ md.compilers.remarkable = (() => {
     xhtmlOut: false,
     langPrefix: 'language-',
     quotes: '“”‘’'
-  }
+  };
 
-  var description = {
+  const description = {
     breaks: 'Convert \\n in paragraphs into <br>',
     html: 'Enable HTML tags in source',
     linkify: 'Autoconvert URL-like text to links',
     typographer: 'Enable some language-neutral replacement + quotes beautification',
     xhtmlOut: 'Use / to close single tags (<br />)'
-  }
+  };
 
-  var ctor = ({storage: {state}}) => ({
+  const ctor = ({ storage: { state } }) => ({
     defaults,
     description,
     compile: (markdown) =>
       new Remarkable('full', state.remarkable)
         .render(markdown)
-  })
+  });
 
-  return Object.assign(ctor, {defaults, description})
-})()
+  return Object.assign(ctor, { defaults, description });
+})();
